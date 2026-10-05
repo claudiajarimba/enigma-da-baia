@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mapa do Enigma da Baía do Seixal</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #14283a; --bg2: #1f3b4d; --gold: #c98a2c; --gold-light: #e0ad55;
+    --cream: #f4ede1; --muted: #9fb2c0;
+  }
+  @media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) { --bg: #14283a; } }
+  * { box-sizing: border-box; }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  body {
+    margin: 0; min-height: 100vh;
+    background: var(--bg);
+    font-family: 'Inter', sans-serif;
+    color: var(--cream);
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    display: flex; justify-content: center;
+  }
+  .wrap { width: 100%; max-width: 520px; padding: 28px 16px 40px; text-align: center; }
+  h1 {
+    font-family: 'Playfair Display', serif; font-size: 22px; margin: 0 0 4px; color: var(--cream);
+  }
+  .sub { color: var(--muted); font-size: 13px; margin-bottom: 18px; }
+  .map-frame {
+    position: relative; width: 100%; aspect-ratio: 1 / 1.05;
+    border-radius: 16px; overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+    border: 1px solid rgba(201,138,44,0.3);
+  }
+  svg { width: 100%; height: 100%; display: block; }
+  .pin {
+    cursor: pointer;
+  }
+  .pin circle.dot {
+    fill: var(--gold);
+    stroke: var(--cream);
+    stroke-width: 1.5;
+    transition: r 0.15s ease;
+  }
+  .pin:hover circle.dot, .pin.active circle.dot { r: 9; fill: var(--gold-light); }
+  .pin text {
+    fill: var(--cream);
+    font-size: 9px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    paint-order: stroke;
+    stroke: #0d1c28;
+    stroke-width: 3px;
+    stroke-linejoin: round;
+  }
+  .popup {
+    margin-top: 16px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(201,138,44,0.35);
+    border-radius: 12px;
+    padding: 16px 18px;
+    text-align: left;
+    min-height: 70px;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .popup .name { font-family: 'Playfair Display', serif; font-size: 16px; color: var(--gold-light); margin-bottom: 6px; }
+  .popup .teaser { font-size: 13px; line-height: 1.6; color: var(--cream); font-style: italic; }
+  .popup .placeholder { font-size: 13px; color: var(--muted); text-align: center; }
+  footer { margin-top: 20px; color: var(--muted); font-size: 11.5px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>O Enigma da Baía do Seixal</h1>
+  <div class="sub">Toca nos pontos do mapa para descobrires onde o mistério te espera</div>
+
+  <div class="map-frame">
+    <svg viewBox="0 0 400 420" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#1f3b4d"/>
+          <stop offset="100%" stop-color="#0d1c28"/>
+        </linearGradient>
+      </defs>
+      <rect x="0" y="0" width="400" height="420" fill="url(#sky)"/>
+      <!-- water body -->
+      <path d="M-10,260 Q100,230 200,255 Q300,280 410,250 L410,430 L-10,430 Z" fill="#0f2333" opacity="0.9"/>
+      <path d="M-10,300 Q120,280 220,300 Q320,320 410,295 L410,430 L-10,430 Z" fill="#0a1a26" opacity="0.9"/>
+      <!-- land mass old town -->
+      <ellipse cx="200" cy="150" rx="150" ry="95" fill="#1a3045" opacity="0.55"/>
+      <!-- decorative moon -->
+      <circle cx="340" cy="55" r="28" fill="#c98a2c" opacity="0.4"/>
+      <!-- dashed route line connecting stops in order -->
+      <path d="M70,230 L100,300 L170,195 L205,110 L230,205 L310,235 L330,95"
+            fill="none" stroke="#c98a2c" stroke-width="1.5" stroke-dasharray="4,5" opacity="0.5"/>
+
+      <!-- Pin 1: Estatua do Pescador / Moinho -->
+      <g class="pin" data-name="Estátua do Pescador" data-teaser="Onde a baía guarda o segredo das velas que já ninguém içou." transform="translate(70,230)">
+        <circle class="dot" r="7"/>
+        <text x="0" y="-12" text-anchor="middle">1</text>
+      </g>
+
+      <!-- Pin 2: Praia do Ti Joao -->
+      <g class="pin" data-name="Praia do Ti João" data-teaser="Um lugar de pausa, onde Aurélio pensava no que nunca contou." transform="translate(100,300)">
+        <circle class="dot" r="7"/>
+        <text x="0" y="-12" text-anchor="middle">2</text>
+      </g>
+
+      <!-- Pin 3: Tipografia Popular -->
+      <g class="pin" data-name="Tipografia Popular" data-teaser="Letra a letra, um número escondido à vista de todos." transform="translate(170,195)">
+        <circle class="dot" r="7"/>
+        <text x="0" y="-12" text-anchor="middle">3</text>
+      </g>
+
+      <!-- Pin 4: Igreja do Seixal -->
+      <g class="pin" data-name="Igreja do Seixal" data-teaser="Sobreviveu a um tremor de terra. O tempo é a chave aqui." transform="translate(205,110)">
+        <circle class="dot" r="7"/>
+        <text x="0" y="-12" text-anchor="middle">4</text>
+      </g>
+
+      <!-- Pin 5: Minimercado Amanhecer -->
+      <g class="pin" data-name="Minimercado Amanhecer" data-teaser="Onde tudo começou em 1895 — e onde tudo se revela." transform="translate(230,205)">
+        <circle class="dot" r="7"/>
+        <text x="0" y="-12" text-anchor="middle">5</text>
+      </g>
+
+      <!-- Pin 6: Upon Harbor / Mundet -->
+      <g class="pin" data-name="Upon Harbor / Mundet Factory" data-teaser="Onde a maior fábrica de cortiça do país um dia funcionou." transform="translate(310,235)">
+        <circle class="dot" r="7"/>
+        <text x="0" y="-12" text-anchor="middle">6</text>
+      </g>
+
+      <!-- Pin 7: Quinta da Fidalga -->
+      <g class="pin" data-name="Quinta da Fidalga" data-teaser="Dizem que aqui se construíram caravelas rumo à Índia." transform="translate(330,95)">
+        <circle class="dot" r="7"/>
+        <text x="0" y="-12" text-anchor="middle">7</text>
+      </g>
+    </svg>
+  </div>
+
+  <div class="popup" id="popup">
+    <div class="placeholder" id="placeholder">Toca num dos 7 pontos do mapa para veres o nome do local</div>
+    <div class="name" id="popupName" style="display:none;"></div>
+    <div class="teaser" id="popupTeaser" style="display:none;"></div>
+  </div>
+
+  <footer>JaraTravels · jaratravels.com</footer>
+</div>
+
+<script>
+const pins = document.querySelectorAll('.pin');
+const placeholder = document.getElementById('placeholder');
+const popupName = document.getElementById('popupName');
+const popupTeaser = document.getElementById('popupTeaser');
+
+pins.forEach(pin => {
+  pin.addEventListener('click', () => {
+    pins.forEach(p => p.classList.remove('active'));
+    pin.classList.add('active');
+    placeholder.style.display = 'none';
+    popupName.style.display = 'block';
+    popupTeaser.style.display = 'block';
+    popupName.textContent = pin.dataset.name;
+    popupTeaser.textContent = pin.dataset.teaser;
+  });
+});
+</script>
+</body>
+</html>
